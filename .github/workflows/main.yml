@@ -11,8 +11,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - run: mvn -B package
+      - name: Build
+        run: |
+          POM=$(find . -name pom.xml -not -path "*/target/*" | head -n 1)
+          echo "Using $POM"
+          mvn -B package -f "$POM"
       - uses: actions/upload-artifact@v4
         with:
           name: MaceGuard
-          path: target/MaceGuard.jar
+          path: "**/target/MaceGuard.jar"
