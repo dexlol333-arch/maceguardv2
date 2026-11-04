@@ -1,0 +1,320 @@
+# ==========================================
+#  MaceGuard config   (colors use & codes)
+# ==========================================
+messages:
+  prefix: "&3&lGUARD &8» "
+  # Action-bar message when armor soaks part of a mace attack
+  absorb-feedback: true
+
+combat:
+  # How long (ticks) after a mace hit or ability the wearer counts as "under attack"
+  # (used for lightning damage and knockback/pull reduction). 20 ticks = 1 second.
+  threat-window-ticks: 12
+
+# ------------------------------------------
+# Altars. Place one with /maceguard altar create <group> while looking at a block.
+# A group is an armor set id or a weapon element id (frostguard, inferno, ...).
+# To forge: hold the item you want to upgrade (e.g. a netherite sword), right-click the
+# altar with the ingredients in your inventory. /recipes shows every recipe.
+# ------------------------------------------
+altar:
+  block: LODESTONE
+  ceremony-seconds: 6
+  broadcast: true
+
+# ------------------------------------------
+# Custom crafting materials (made at a normal crafting table, used at altars).
+#   shape / ingredients: a normal shaped recipe (max 3x3, one-letter keys).
+#   amount: how many you get per craft.
+# ------------------------------------------
+custom-items:
+  inferno_essence:
+    material: BLAZE_POWDER
+    name: "&c&lInferno Essence"
+    lore:
+      - "&7Condensed flame."
+      - "&8Altar ingredient"
+    glow: true
+    recipe:
+      amount: 1
+      shape: ["BMB", "MSM", "BMB"]
+      ingredients:
+        B: BLAZE_ROD
+        M: MAGMA_BLOCK
+        S: NETHERITE_SCRAP
+
+  tempest_essence:
+    material: COPPER_INGOT
+    name: "&b&lTempest Essence"
+    lore:
+      - "&7A captured storm."
+      - "&8Altar ingredient"
+    glow: true
+    recipe:
+      amount: 1
+      shape: ["LCL", "BSB", "LCL"]
+      ingredients:
+        L: LIGHTNING_ROD
+        C: COPPER_BLOCK
+        B: BREEZE_ROD
+        S: NETHERITE_SCRAP
+
+  void_essence:
+    material: ECHO_SHARD
+    name: "&5&lVoid Essence"
+    lore:
+      - "&7A sliver of nothing."
+      - "&8Altar ingredient"
+    glow: true
+    recipe:
+      amount: 1
+      shape: ["ECE", "CSC", "ECE"]
+      ingredients:
+        E: ENDER_EYE
+        C: CRYING_OBSIDIAN
+        S: NETHERITE_SCRAP
+
+  reinforced_handle:
+    material: BREEZE_ROD
+    name: "&6&lReinforced Handle"
+    lore:
+      - "&7Balanced for a legend."
+      - "&8Altar ingredient"
+    glow: true
+    recipe:
+      amount: 1
+      shape: ["I", "B", "R"]
+      ingredients:
+        I: NETHERITE_INGOT
+        B: BREEZE_ROD
+        R: BLAZE_ROD
+
+# ------------------------------------------
+# One entry per armor set.
+#   counters:   the element this set fights: a MaceRituals mace id (see /ritual types)
+#               and that element's weapons from the "weapons" section below
+#   base:       LEATHER, CHAINMAIL, IRON, GOLDEN, DIAMOND or NETHERITE
+#   trim:       the trim stamped on every piece (identifies which mace it counters).
+#               The trim cannot be changed at a smithing table.
+#   per-piece values stack, so a full set (4 pieces) = 4x the value (capped at 100%):
+#     damage-reduction    less damage from that mace's hits, abilities and lightning
+#     effect-reduction    shorter burn time / potion effects that mace applies
+#     knockback-reduction weaker knockback, wind gusts and void pulls from that mace
+#   altar:
+#     max-crafted  how many times each piece can be forged on the server (0 = unlimited)
+#     ingredients  totals for a FULL SET, split across the four pieces by armor weight
+#                  (helmet 5, chestplate 8, leggings 7, boots 4 parts of 24, min 1 each).
+#                  The matching vanilla armor piece (e.g. iron chestplate) is held in hand.
+#                  Formats:  MATERIAL:amount | item:<custom item id>:amount | core:<mace id>:amount
+#                  (core = the MaceRituals Heavy Core of that mace)
+# ------------------------------------------
+armors:
+  frostguard:
+    counters: inferno
+    name: "&b&lFrostguard"
+    base: IRON
+    trim:
+      pattern: tide
+      material: diamond
+    enchants:
+      protection: 4
+      fire_protection: 4
+      unbreaking: 3
+      mending: 1
+    damage-reduction: 0.10
+    effect-reduction: 0.25
+    knockback-reduction: 0.10
+    lore:
+      - "&7Cold-forged against the flame."
+      - ""
+      - "&bFull set: &7immune to Inferno burning"
+    altar:
+      max-crafted: 0
+      ingredients:
+        - "core:inferno:4"
+        - "item:inferno_essence:4"
+        - "BLUE_ICE:48"
+        - "DIAMOND:16"
+
+  groundwire:
+    counters: tempest
+    name: "&6&lGroundwire"
+    base: DIAMOND
+    trim:
+      pattern: bolt
+      material: copper
+    enchants:
+      protection: 4
+      blast_protection: 3
+      unbreaking: 3
+      mending: 1
+    damage-reduction: 0.10
+    effect-reduction: 0.25
+    knockback-reduction: 0.25
+    lore:
+      - "&7Copper-wired to ground the storm."
+      - ""
+      - "&6Full set: &7immune to Tempest knockback"
+    altar:
+      max-crafted: 0
+      ingredients:
+        - "core:tempest:4"
+        - "item:tempest_essence:4"
+        - "COPPER_BLOCK:48"
+        - "LIGHTNING_ROD:12"
+
+  voidanchor:
+    counters: voidbreaker
+    name: "&5&lVoidanchor"
+    base: NETHERITE
+    trim:
+      pattern: ward
+      material: amethyst
+    enchants:
+      protection: 4
+      unbreaking: 3
+      mending: 1
+    damage-reduction: 0.10
+    effect-reduction: 0.25
+    knockback-reduction: 0.25
+    lore:
+      - "&7Anchored against the pull of the void."
+      - ""
+      - "&5Full set: &7immune to Void Pull, wither and blindness"
+    altar:
+      max-crafted: 0
+      ingredients:
+        - "core:voidbreaker:4"
+        - "item:void_essence:4"
+        - "CRYING_OBSIDIAN:48"
+        - "ECHO_SHARD:8"
+
+# ------------------------------------------
+# Elemental weapons: a sword, axe and spear for each element.
+# Element ids match the MaceRituals mace ids (inferno, tempest, voidbreaker), so the
+# armor set that counters a mace also counters that element's weapons.
+#   base:  material family for all three tools. Spears need Minecraft 1.21.11+.
+#   enchants: minecraft enchantment ids, applied to every tool of the element
+#   bonus-damage / fire-seconds / potions (effect_id:ticks:amplifier) /
+#   lightning-chance + lightning-damage: on-hit effects on whatever you hit
+#   altar: same as for armor, but the ingredients are PER TOOL (not split).
+#          The matching vanilla tool (e.g. netherite axe) is held in hand.
+# ------------------------------------------
+weapons:
+  inferno:
+    name: "&c&lInferno"
+    base: NETHERITE
+    enchants:
+      sharpness: 5
+      unbreaking: 3
+      mending: 1
+    bonus-damage: 1.5
+    fire-seconds: 5
+    potions: ["weakness:60:0"]
+    lightning-chance: 0.0
+    lightning-damage: 0.0
+    lore:
+      - "&6Passive: &7ignites targets and weakens them"
+    altar:
+      max-crafted: 0
+      ingredients:
+        - "core:inferno:1"
+        - "item:inferno_essence:3"
+        - "item:reinforced_handle:1"
+        - "BLAZE_ROD:16"
+        - "MAGMA_BLOCK:16"
+
+  tempest:
+    name: "&b&lTempest"
+    base: NETHERITE
+    enchants:
+      sharpness: 5
+      unbreaking: 3
+      mending: 1
+    bonus-damage: 1.0
+    fire-seconds: 0
+    potions: ["slowness:40:1"]
+    lightning-chance: 0.12
+    lightning-damage: 4.0
+    lore:
+      - "&bPassive: &712% chance to call lightning, slows targets"
+    altar:
+      max-crafted: 0
+      ingredients:
+        - "core:tempest:1"
+        - "item:tempest_essence:3"
+        - "item:reinforced_handle:1"
+        - "BREEZE_ROD:16"
+        - "LIGHTNING_ROD:8"
+
+  voidbreaker:
+    name: "&5&lVoidbreaker"
+    base: NETHERITE
+    enchants:
+      sharpness: 5
+      unbreaking: 3
+      mending: 1
+    bonus-damage: 2.0
+    fire-seconds: 0
+    potions: ["wither:60:0", "blindness:40:0"]
+    lightning-chance: 0.0
+    lightning-damage: 0.0
+    lore:
+      - "&5Passive: &7withers and blinds targets"
+    altar:
+      max-crafted: 0
+      ingredients:
+        - "core:voidbreaker:1"
+        - "item:void_essence:3"
+        - "item:reinforced_handle:1"
+        - "ECHO_SHARD:8"
+        - "CRYING_OBSIDIAN:16"
+
+# ------------------------------------------
+# Crafting recipes (shown in the crafting table's recipe book)
+#
+#   A B A     A = corners (x4)    B = edges (x3)
+#   B X B     X = the base armor piece / tool (from "base" above)
+#   A C A     C = a MaceRituals Heavy Core of the element in "core"
+#
+# Click a recipe in the recipe book to fill the grid from your inventory, then take
+# the result. Every piece of a set / every tool of an element uses the same pattern.
+# Don't use BREEZE_ROD here: MaceRituals treats core + breeze rod as a ritual start.
+# ------------------------------------------
+recipes:
+  enabled: true
+  # join = everyone gets the recipes in their recipe book on join
+  # none = only players unlocked with /maceguard unlock
+  unlock: join
+  # The "ritual" when something is forged: lightning flash, particles, title
+  ceremony:
+    enabled: true
+    broadcast: true   # tell the whole server who forged what
+
+  armor:
+    frostguard:
+      core: inferno
+      corners: BLUE_ICE
+      edges: DIAMOND
+    groundwire:
+      core: tempest
+      corners: LIGHTNING_ROD
+      edges: COPPER_BLOCK
+    voidanchor:
+      core: voidbreaker
+      corners: ENDER_EYE
+      edges: AMETHYST_BLOCK
+
+  weapons:
+    inferno:
+      core: inferno
+      corners: BLAZE_ROD
+      edges: MAGMA_BLOCK
+    tempest:
+      core: tempest
+      corners: LIGHTNING_ROD
+      edges: WIND_CHARGE
+    voidbreaker:
+      core: voidbreaker
+      corners: ENDER_EYE
+      edges: ECHO_SHARD

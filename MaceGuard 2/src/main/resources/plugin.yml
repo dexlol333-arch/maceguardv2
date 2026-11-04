@@ -1,0 +1,25 @@
+name: MaceGuard
+version: 1.1.0
+main: dev.maceguard.MaceGuard
+api-version: '1.21'
+depend: [MaceRituals]
+description: Altar-forged trimmed armor and elemental weapons for MaceRituals.
+commands:
+  maceguard:
+    description: MaceGuard admin command
+    usage: /maceguard help
+    aliases: [mguard, guard]
+  recipes:
+    description: Browse altar recipes
+    usage: /recipes
+    aliases: [altarrecipes]
+permissions:
+  maceguard.admin:
+    description: Give items, place altars and reload the config
+    default: op
+  maceguard.altar.use:
+    description: Forge items at altars
+    default: true
+  maceguard.recipes:
+    description: Open the recipe menu
+    default: true
