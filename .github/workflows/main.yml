@@ -11,8 +11,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - run: mvn -B package -f MaceGuard/pom.xml
+      - run: mvn -B package
       - uses: actions/upload-artifact@v4
         with:
           name: MaceGuard
-          path: MaceGuard/target/MaceGuard.jar
+          path: target/MaceGuard.jar
